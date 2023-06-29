@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+
+<link rel="stylesheet" href="https://bootswatch.com/4/simplex/bootstrap.min.css"/>
+
+
+<div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body">
+                        <div class="card-title mb-4">
+                            <div class="d-flex justify-content-start">
+                                <div class="image-container">
+                                    <img src="data:image/jpeg;base64,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" id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail" />
+                                    <div class="middle">
+                                        <input type="button" class="btn btn-secondary" id="btnChangePicture" value="Change" />
+                                        <input type="file" style="display: none;" id="profilePicture" name="file" />
+                                    </div>
+                                </div>
+                                <div class="userData ml-3">
+                                    <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a href="javascript:void(0);">{{ current_user.username }}</a></h2>
+                                </div>
+                                <div class="ml-auto">
+                                    <input type="button" class="btn btn-primary d-none" id="btnDiscard" value="Discard Changes" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo" role="tab" aria-controls="basicInfo" aria-selected="true">Basic Info</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="connectedServices-tab" data-toggle="tab" href="#connectedServices" role="tab" aria-controls="connectedServices" aria-selected="false">Connected Services</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content ml-1" id="myTabContent">
+                                    <form class="tab-pane fade show active" id="basicInfo" role="tabpanel" aria-labelledby="basicInfo-tab" method="POST">
+
+
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Full Name</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                {{ current_user.username }}
+                                            </div>
+                                        </div>
+                                        <hr />
+
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">ID number</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                {{ current_user.id }}
+                                            </div>
+                                        </div>
+                                        <hr />
+
+
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Email</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                {{ current_user.email }}
+                                            </div>
+                                        </div>
+                                        <hr />
+
+                                        {{ form.hidden_tag() }}
+                                        {% with messages = get_flashed_messages() %}
+                                            {% if messages %}
+                                                <ul class="messages">
+                                                    {% for message in messages %}
+                                                        <li style="color: red;">{{ message }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+                                        {% endwith %}
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                {{ form.username.label(class="col-form-label",style="font-weight:bold;") }}
+                                            </div>
+
+                                            {{ form.username(class="col-md-8 col-6", required="required", value=current_user.username) }}
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                {{ form.email.label(class="col-form-label",style="font-weight:bold;") }}
+                                            </div>
+
+                                            {{ form.email(class="col-md-8 col-6", required="required", value=current_user.email) }}
+                                        </div>
+
+
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Something</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                Something
+                                            </div>
+                                        </div>
+                                        <hr />
+                                         {{ form.submit(class="btn btn-primary") }}
+
+                                    </form>
+                                    <div class="tab-pane fade" id="connectedServices" role="tabpanel" aria-labelledby="ConnectedServices-tab">
+                                        Facebook, Google, Twitter Account that are connected to this account
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

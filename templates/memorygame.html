@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .square {
+            width: 100px;
+            height: 100px;
+            font-size: 3rem;
+            outline: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tic Tac Toe</h1>
+        <div class="row">
+            <div class="col">
+                <button id="btn0" class="btn btn-light square" onclick="markSquare(0)"></button>
+                <button id="btn1" class="btn btn-light square" onclick="markSquare(1)"></button>
+                <button id="btn2" class="btn btn-light square" onclick="markSquare(2)"></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button id="btn3" class="btn btn-light square" onclick="markSquare(3)"></button>
+                <button id="btn4" class="btn btn-light square" onclick="markSquare(4)"></button>
+                <button id="btn5" class="btn btn-light square" onclick="markSquare(5)"></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button id="btn6" class="btn btn-light square" onclick="markSquare(6)"></button>
+                <button id="btn7" class="btn btn-light square" onclick="markSquare(7)"></button>
+                <button id="btn8" class="btn btn-light square" onclick="markSquare(8)"></button>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-auto">
+                <button id="resetBtn" class="btn btn-primary" onclick="resetGame()">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var currentPlayer = 'X';
+        var board = ['', '', '', '', '', '', '', '', ''];
+
+        function markSquare(index) {
+            if (board[index] === '') {
+                board[index] = currentPlayer;
+                document.getElementById('btn' + index).innerText = currentPlayer;
+                checkWinner();
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            }
+        }
+
+        function checkWinner() {
+            var winningCombinations = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+                [0, 4, 8], [2, 4, 6]             // Diagonals
+            ];
+
+            for (var i = 0; i < winningCombinations.length; i++) {
+                var [a, b, c] = winningCombinations[i];
+                if (board[a] !== '' && board[a] === board[b] && board[a] === board[c]) {
+                    alert('Player ' + board[a] + ' wins!');
+                    resetGame();
+                    return;
+                }
+            }
+
+            if (board.every(square => square !== '')) {
+                alert('It\'s a draw!');
+                resetGame();
+            }
+        }
+
+        function resetGame() {
+            currentPlayer = 'X';
+            board = ['', '', '', '', '', '', '', '', ''];
+            for (var i = 0; i < 9; i++) {
+                document.getElementById('btn' + i).innerText = '';
+            }
+        }
+    </script>
+</body>
+</html>
+
+{% endblock  %}
+

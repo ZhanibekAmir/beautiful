@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2048 Game</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .game-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .game-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .score-container {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            background-color: #bbada0;
+            padding: 10px;
+        }
+        .grid-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #776e65;
+            background-color: #cdc1b4;
+            border-radius: 5px;
+            height: 80px;
+        }
+        .tile-2 {
+            background-color: #eee4da;
+            color: #776e65;
+        }
+        .tile-4 {
+            background-color: #ede0c8;
+            color: #776e65;
+        }
+        .tile-8 {
+            background-color: #f2b179;
+            color: #f9f6f2;
+        }
+        .tile-16 {
+            background-color: #f59563;
+            color: #f9f6f2;
+        }
+        .tile-32 {
+            background-color: #f67c5f;
+            color: #f9f6f2;
+        }
+        .tile-64 {
+            background-color: #f65e3b;
+            color: #f9f6f2;
+        }
+        .tile-128 {
+            background-color: #edcf72;
+            color: #f9f6f2;
+        }
+        .tile-256 {
+            background-color: #edcc61;
+            color: #f9f6f2;
+        }
+        .tile-512 {
+            background-color: #edc850;
+            color: #f9f6f2;
+        }
+        .tile-1024 {
+            background-color: #edc53f;
+            color: #f9f6f2;
+        }
+        .tile-2048 {
+            background-color: #edc22e;
+            color: #f9f6f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container game-container">
+        <h1 class="game-title">2048</h1>
+        <div class="score-container">
+            Score: <span id="score">0</span>
+        </div>
+        <div class="grid-container" id="gridContainer"></div>
+        <div class="text-center mt-3">
+            <button class="btn btn-primary" onclick="resetGame()">New Game</button>
+        </div>
+    </div>
+
+    <script>
+        var gridContainer = document.getElementById('gridContainer');
+        var scoreDisplay = document.getElementById('score');
+        var score = 0;
+        var grid = [];
+        var gridSize = 4;
+
+        function createGrid() {
+            for (var i = 0; i < gridSize; i++) {
+                var row = [];
+                for (var j = 0; j < gridSize; j++) {
+                    row.push(0);
+                }
+                grid.push(row);
+            }
+        }
+
+        function renderGrid() {
+            gridContainer.innerHTML = '';
+            for (var i = 0; i < gridSize; i++) {
+                for (var j = 0; j < gridSize; j++) {
+                    var cell = document.createElement('div');
+                    cell.className = 'grid-cell';
+                    cell.textContent = grid[i][j] !== 0 ? grid[i][j] : '';
+                    cell.classList.add('tile-' + grid[i][j]);
+                    gridContainer.appendChild(cell);
+                }
+            }
+        }
+
+        function generateRandomTile() {
+            var emptyCells = [];
+            for (var i = 0; i < gridSize; i++) {
+                for (var j = 0; j < gridSize; j++) {
+                    if (grid[i][j] === 0) {
+                        emptyCells.push({ row: i, col: j });
+                    }
+                }
+            }
+
+            if (emptyCells.length > 0) {
+                var randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+                grid[randomCell.row][randomCell.col] = Math.random() < 0.9 ? 2 : 4;
+            }
+        }
+
+        function resetGrid() {
+            grid = [];
+            score = 0;
+            scoreDisplay.textContent = score;
+            createGrid();
+            generateRandomTile();
+            generateRandomTile();
+            renderGrid();
+        }
+
+        function move(direction) {
+            var moved = false;
+
+            if (direction === 'left') {
+                for (var i = 0; i < gridSize; i++) {
+                    for (var j = 1; j < gridSize; j++) {
+                        if (grid[i][j] !== 0) {
+                            for (var k = j; k > 0; k--) {
+                                if (grid[i][k - 1] === 0 || grid[i][k - 1] === grid[i][k]) {
+                                    if (grid[i][k - 1] === 0) {
+                                        grid[i][k - 1] = grid[i][k];
+                                    } else if (grid[i][k - 1] === grid[i][k]) {
+                                        grid[i][k - 1] *= 2;
+                                        score += grid[i][k - 1];
+                                    }
+                                    grid[i][k] = 0;
+                                    moved = true;
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            } else if (direction === 'right') {
+                for (var i = 0; i < gridSize; i++) {
+                    for (var j = gridSize - 2; j >= 0; j--) {
+                        if (grid[i][j] !== 0) {
+                            for (var k = j; k < gridSize - 1; k++) {
+                                if (grid[i][k + 1] === 0 || grid[i][k + 1] === grid[i][k]) {
+                                    if (grid[i][k + 1] === 0) {
+                                        grid[i][k + 1] = grid[i][k];
+                                    } else if (grid[i][k + 1] === grid[i][k]) {
+                                        grid[i][k + 1] *= 2;
+                                        score += grid[i][k + 1];
+                                    }
+                                    grid[i][k] = 0;
+                                    moved = true;
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            } else if (direction === 'up') {
+                for (var j = 0; j < gridSize; j++) {
+                    for (var i = 1; i < gridSize; i++) {
+                        if (grid[i][j] !== 0) {
+                            for (var k = i; k > 0; k--) {
+                                if (grid[k - 1][j] === 0 || grid[k - 1][j] === grid[k][j]) {
+                                    if (grid[k - 1][j] === 0) {
+                                        grid[k - 1][j] = grid[k][j];
+                                    } else if (grid[k - 1][j] === grid[k][j]) {
+                                        grid[k - 1][j] *= 2;
+                                        score += grid[k - 1][j];
+                                    }
+                                    grid[k][j] = 0;
+                                    moved = true;
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            } else if (direction === 'down') {
+                for (var j = 0; j < gridSize; j++) {
+                    for (var i = gridSize - 2; i >= 0; i--) {
+                        if (grid[i][j] !== 0) {
+                            for (var k = i; k < gridSize - 1; k++) {
+                                if (grid[k + 1][j] === 0 || grid[k + 1][j] === grid[k][j]) {
+                                    if (grid[k + 1][j] === 0) {
+                                        grid[k + 1][j] = grid[k][j];
+                                    } else if (grid[k + 1][j] === grid[k][j]) {
+                                        grid[k + 1][j] *= 2;
+                                        score += grid[k + 1][j];
+                                    }
+                                    grid[k][j] = 0;
+                                    moved = true;
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (moved) {
+                generateRandomTile();
+                renderGrid();
+                scoreDisplay.textContent = score;
+
+                if (checkGameOver()) {
+                    alert('Game Over!');
+                }
+            }
+        }
+
+        function checkGameOver() {
+            for (var i = 0; i < gridSize; i++) {
+                for (var j = 0; j < gridSize; j++) {
+                    if (grid[i][j] === 0) {
+                        return false;
+                    }
+                    if (j < gridSize - 1 && grid[i][j] === grid[i][j + 1]) {
+                        return false;
+                    }
+                    if (i < gridSize - 1 && grid[i][j] === grid[i + 1][j]) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'ArrowUp') {
+                move('up');
+            } else if (event.key === 'ArrowDown') {
+                move('down');
+            } else if (event.key === 'ArrowLeft') {
+                move('left');
+            } else if (event.key === 'ArrowRight') {
+                move('right');
+            }
+        }
+
+        function resetGame() {
+            resetGrid();
+        }
+
+        document.addEventListener('keydown', handleKeyPress);
+        resetGame();
+    </script>
+</body>
+</html>
+
+
+{% endblock  %}
+

@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Main Lobby</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #333;
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #555;
+      font-size: 18px;
+    }
+
+    .lobby {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-gap: 30px;
+      width: 100%;
+    }
+
+    .lobby-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      padding: 30px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .lobby-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .lobby-item:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: linear-gradient(45deg, rgba(0,0,0,0.3), rgba(0,0,0,0.3));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .lobby-item:hover:before {
+      opacity: 1;
+    }
+
+    .lobby-item img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .lobby-item-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .lobby-item-description {
+      color: #fff;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .lobby-item-button {
+      padding: 12px 24px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .lobby-item-button:hover {
+      background-color: #45a049;
+    }
+
+    @media only screen and (max-width: 768px) {
+      .lobby {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px;
+      }
+    }
+
+    @media only screen and (max-width: 480px) {
+      .lobby {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+        font-size: 24px;
+      }
+
+      .lobby-item {
+        padding: 20px;
+      }
+
+      .lobby-item img {
+        width: 120px;
+        height: 120px;
+      }
+
+      .lobby-item-title {
+        font-size: 20px;
+      }
+
+      .lobby-item-description {
+        font-size: 14px;
+      }
+
+      .lobby-item-button {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to Amir's Lobby</h1>
+
+    <div class="intro">
+      <p>Feel the excitement as you explore the games!</p>
+    </div>
+
+    <div class="lobby">
+      <div class="lobby-item">
+        <img src="game1.jpg" alt="Game 1">
+        <h2 class="lobby-item-title">Guess The Number</h2>
+        <p class="lobby-item-description">Challenge yourself to guess the correct number.</p>
+        <button class="lobby-item-button"><a href="/game">Play Now!</a></button>
+      </div>
+
+      <div class="lobby-item">
+        <img src="game2.jpg" alt="Game 2">
+        <h2 class="lobby-item-title">Watch The Jokes</h2>
+        <p class="lobby-item-description">Get ready for a laughter-filled experience with hilarious jokes.</p>
+        <button class="lobby-item-button"><a href="/prikol">Play Now!</a></button>
+      </div>
+
+      <div class="lobby-item">
+        <img src="game3.jpg" alt="Game 3">
+        <h2 class="lobby-item-title">Tik Tak Toe Game</h2>
+        <p class="lobby-item-description">Challenge a friend to a classic game of Tik Tak Toe.</p>
+        <button class="lobby-item-button"><a href="/memorygame">Play Now!</a></button>
+      </div>
+
+      <div class="lobby-item">
+        <img src="game4.jpg" alt="Game 4">
+        <h2 class="lobby-item-title">2048 Game</h2>
+        <p class="lobby-item-description">Test your skills in this addictive number puzzle game.</p>
+        <button class="lobby-item-button"><a href="/2048">Play Now!</a></button>
+      </div>
+
+      <div class="lobby-item">
+        <img src="game5.jpg" alt="Game 5">
+        <h2 class="lobby-item-title">Calculator For +</h2>
+        <p class="lobby-item-description">Perform basic addition calculations with this handy calculator.</p>
+        <button class="lobby-item-button"><a href="/calc">Play Now!</a></button>
+      </div>
+
+      <div class="lobby-item">
+        <img src="game6.jpg" alt="Game 6">
+        <h2 class="lobby-item-title">Calculator For *</h2>
+        <p class="lobby-item-description">Multiply numbers effortlessly with this calculator.</p>
+        <button class="lobby-item-button"><a href="/calculate">Play Now!</a></button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+<p>{{username}}</p>
+<p>{{password}}</p>
+
+{% endblock %}

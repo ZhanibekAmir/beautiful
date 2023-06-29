@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess the Number</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  <style>
+    .container {
+      max-width: 400px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .btn-primary {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .result {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Guess the Number</h1>
+    <p>Guess a number between 1 and 10:</p>
+    <input type="number" id="guess" class="form-control" placeholder="Enter your guess">
+    <button id="checkBtn" class="btn btn-primary">Check</button>
+    <p id="result" class="result"></p>
+    <button id="restartBtn" class="btn btn-primary" style="display: none;">Restart</button>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+  <!-- Custom JS -->
+  <script>
+    $(document).ready(function() {
+      var randomNumber;
+      var attempts;
+
+      function startNewGame() {
+        randomNumber = Math.floor(Math.random() * 10) + 1;
+        attempts = 3;
+
+        $("#guess").val("");
+        $("#guess").prop("disabled", false);
+        $("#checkBtn").prop("disabled", false);
+        $("#restartBtn").hide();
+        $("#result").text("");
+      }
+
+      $("#checkBtn").click(function() {
+        var guess = parseInt($("#guess").val());
+
+        if (isNaN(guess) || guess < 1 || guess > 10) {
+          $("#result").text("Please enter a valid number between 1 and 10.");
+          return;
+        }
+
+        if (guess === randomNumber) {
+          $("#result").text("Congratulations! You guessed the correct number.");
+          $("#guess").prop("disabled", true);
+          $("#checkBtn").prop("disabled", true);
+          $("#restartBtn").show();
+        } else {
+          attempts--;
+          if (attempts > 0) {
+            var message = "Wrong guess! Try again. " + attempts + " attempt(s) remaining.";
+            $("#result").text(message);
+          } else {
+            $("#result").text("Game over. The correct number was " + randomNumber + ".");
+            $("#guess").prop("disabled", true);
+            $("#checkBtn").prop("disabled", true);
+            $("#restartBtn").show();
+          }
+        }
+      });
+
+      $("#restartBtn").click(function() {
+        startNewGame();
+      });
+
+      startNewGame();
+    });
+  </script>
+</body>
+</html>
+
+
+
+{% endblock  %}
